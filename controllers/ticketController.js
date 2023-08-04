@@ -63,15 +63,18 @@ const UpdateTicketById = asyncHandler(async (req, res) => {
     const ticket_id=ticket.ticket_id;
 
     // Update only the required fields from req.body using the spread operator
-    const updatedTicket = await Ticket.findByIdAndUpdate(
-      ticket._id,
-      {ticket_id,...ticket.toObject(), ...req.body },
+    const updatedTicket = await Ticket.findOneAndUpdate(
+       {ticket_id:req.params.id},
+      {...ticket.toObject(), ...req.body },
       { new: true }
     );
 
-    console.log("Line 72:", updatedTicket);
+    // console.log("Line 72:", updatedTicket);
+    // console.log("73:",ticket_id,req.params.id);
+    console.log("74:",req.params);
 
-    res.status(200).json({ message: `Update ticket with id ${updateTicket}` });
+
+    res.status(200).json({ message: `Update ticket with id ${ticket_id}` });
   });
 
 
