@@ -10,19 +10,14 @@ const nextTicket = async () => {
         return bId - aId;
       });
       const lastTicket=tickets[0];
-      console.log("12:",lastTicket);
-    console.log("6:",lastTicket)
     let lastId = 0;
     if (lastTicket) {
       lastId = parseInt(lastTicket.ticket_id.split('-')[1]);
-      console.log("18:", lastId);
       lastId = lastId + 1;
-      console.log("19:", lastId);
     } else {
       lastId = 1;
     }
     const ticket_id = `HELP-${lastId}`;
-    console.log("25:", lastId);
     return ticket_id;
   };
 
