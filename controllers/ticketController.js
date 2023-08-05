@@ -68,12 +68,6 @@ const UpdateTicketById = asyncHandler(async (req, res) => {
       {...ticket.toObject(), ...req.body },
       { new: true }
     );
-
-    // console.log("Line 72:", updatedTicket);
-    // console.log("73:",ticket_id,req.params.id);
-    console.log("74:",req.params);
-
-
     res.status(200).json({ message: `Update ticket with id ${ticket_id}` });
   });
 
