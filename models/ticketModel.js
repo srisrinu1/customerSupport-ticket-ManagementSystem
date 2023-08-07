@@ -23,7 +23,14 @@ const ticketSchema=mongoose.Schema({
         type:String,
         required:[true,"Maintain the status of the ticket"],
         enum:['DONE','IN PROGRESS','NEW'],
+    },
+    reporter:{
+       type:mongoose.Schema.Types.ObjectId,
+       required:true,
+       ref:"User"
+
     }
+
 },
     { timestamps: true }
 );

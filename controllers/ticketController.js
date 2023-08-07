@@ -1,16 +1,39 @@
 const asyncHandler=require('express-async-handler');
 const Ticket=require('../models/ticketModel');
 const nextTicket=require('../utils/nextTicket');
-// Get all the tickets
-//@access public
 
+
+//@desc Get all the tickets
+//@route GET /api/tickets/
+//@access private
 const getTickets=asyncHandler(async(req,res)=>{
+
+    console.log("Line 10:",req.user);
+
+
     const Tickets=await Ticket.find();
     res.status(200).json(Tickets)
 });
 
-// Create  the ticket
-//@access public
+//@desc Get all the tickets
+//@route GET /api/tickets/:reporter
+//@access private
+const getTicketsbyUser=asyncHandler(async(req,res)=>{
+  // console.log("Line 22:",req.user.id);
+
+  const tickets=await Ticket.find({reporter:req.params.reporter},
+    {
+      _id,
+      __v
+    });
+  console.log("Line 23:",tickets)
+  res.status(200).json(tickets)
+})
+
+
+//@desc Create  the ticket
+//@route POST /api/tickets/
+//@access private
 const createTicket = asyncHandler(async (req, res) => {
     // console.log(req.body);
     const { title, body, type, status } = req.body;
@@ -21,12 +44,17 @@ const createTicket = asyncHandler(async (req, res) => {
 
     // Get the next ticket_id using the nextTicket function
     const ticket_id = await nextTicket();
+    console.log("Line 35:",req.body);
+    console.log("Line 36:",req.user);
+    const reporter=req.user.id;
     const ticket = await Ticket.create({
       ticket_id,
       title,
       body,
       type,
       status,
+      reporter
+
     });
 
     res.status(201).json(ticket);
@@ -34,8 +62,9 @@ const createTicket = asyncHandler(async (req, res) => {
 
 
 
-// Get  the ticket by id
-//@access public
+//@desc Get  the ticket by id
+//@route GET /api/tickets/:id
+//@access private
 const getTicketById=asyncHandler(async(req,res)=>{
     const ticket=await Ticket.findOne(
         {
@@ -52,8 +81,9 @@ const getTicketById=asyncHandler(async(req,res)=>{
 });
 
 
-// Update the ticket by id
-//@access public
+//@desc Update the ticket by id
+//@route PUT /api/tickets/:id
+//@access private
 const UpdateTicketById = asyncHandler(async (req, res) => {
     const ticket = await Ticket.findOne({ ticket_id: req.params.id });
 
@@ -72,7 +102,8 @@ const UpdateTicketById = asyncHandler(async (req, res) => {
   });
 
 
-// Delete specific ticket
+//@desc Delete specific ticket
+//@route DEL /api/tickets/:id
 //@access public
 const deleteTicket=asyncHandler(async(req,res)=>{
     const ticket = await Ticket.findOne({ ticket_id: req.params.id });
@@ -89,6 +120,7 @@ const deleteTicket=asyncHandler(async(req,res)=>{
 
 module.exports={
     getTickets,
+    getTicketsbyUser,
     createTicket,
     getTicketById,
     UpdateTicketById,
