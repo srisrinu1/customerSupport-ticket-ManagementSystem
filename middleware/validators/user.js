@@ -7,7 +7,8 @@ const userSchema=joi.object().strict().keys({
    email:joi.string().email().required(),
    password:joi.string().min(8).max(30).
    regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[a-zA-Z\d!@#$%^&*()_+]{8,30}$/).
-   required()
+   required(),
+   name:joi.string().min(8).max(30).required()
 
 });
 

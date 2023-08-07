@@ -14,7 +14,12 @@ const userSchema=mongoose.Schema({
     password:{
         type:String,
         required:[true,"Please type the password"]
+    },
+    name:{
+        type:String,
+        required:[true,"Please type the name"]
     }
+
 },
     {
      timeStamps:true
