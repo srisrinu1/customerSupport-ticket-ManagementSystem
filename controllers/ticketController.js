@@ -11,7 +11,11 @@ const getTickets=asyncHandler(async(req,res)=>{
     console.log("Line 10:",req.user);
 
 
-    const Tickets=await Ticket.find();
+    const Tickets=await Ticket.find({},
+      {
+        _id:0,
+        __v:0
+      });
     res.status(200).json(Tickets)
 });
 
@@ -21,11 +25,13 @@ const getTickets=asyncHandler(async(req,res)=>{
 const getTicketsbyUser=asyncHandler(async(req,res)=>{
   // console.log("Line 22:",req.user.id);
 
-  const tickets=await Ticket.find({reporter:req.params.reporter},
-    {
-      _id,
-      __v
-    });
+  const tickets=await Ticket.find({
+    reporter:req.params.reporter
+  },
+  {
+    _id:0,
+    __v:0
+  });
   console.log("Line 23:",tickets)
   res.status(200).json(tickets)
 })
