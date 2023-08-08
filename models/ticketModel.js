@@ -29,6 +29,10 @@ const ticketSchema=mongoose.Schema({
        required:true,
        ref:"User"
 
+    },
+    project:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Project"
     }
 
 },
