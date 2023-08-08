@@ -1,5 +1,6 @@
 const asyncHandler=require('express-async-handler');
 const Ticket=require('../models/ticketModel');
+const Project=require('../models/projectModel');
 const nextTicket=require('../utils/nextTicket');
 
 
@@ -42,6 +43,10 @@ const getTicketsbyUser=asyncHandler(async(req,res)=>{
 //@access private
 const createTicket = asyncHandler(async (req, res) => {
     // console.log(req.body);
+    const project=await Project.findOne({_id:req.params.projectId});
+    if(!project){
+       res.status(404).json({message:'Project not found'});
+    }
     const { title, body, type, status } = req.body;
     if (!title || !body || !type || !status) {
       res.status(400);
@@ -59,7 +64,8 @@ const createTicket = asyncHandler(async (req, res) => {
       body,
       type,
       status,
-      reporter
+      reporter,
+      project:project._id
 
     });
 

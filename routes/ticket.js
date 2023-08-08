@@ -9,7 +9,7 @@ router.use(validateToken);
 
 router.get("/",getTickets);
 
-router.post("/",createTicket);
+router.post("/:projectId",createTicket);
 router.get("/:id",getTicketById);
 router.get("/user/:reporter",getTicketsbyUser)
 
